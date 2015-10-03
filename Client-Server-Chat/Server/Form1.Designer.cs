@@ -77,6 +77,7 @@
             this.btnStartListening.TabIndex = 4;
             this.btnStartListening.Text = "Start Listening";
             this.btnStartListening.UseVisualStyleBackColor = true;
+            this.btnStartListening.Click += new System.EventHandler(this.btnStartListening_Click);
             // 
             // btnStopListening
             // 
@@ -86,6 +87,7 @@
             this.btnStopListening.TabIndex = 5;
             this.btnStopListening.Text = "Stop Listening";
             this.btnStopListening.UseVisualStyleBackColor = true;
+            this.btnStopListening.Click += new System.EventHandler(this.btnStopListening_Click);
             // 
             // serverGUI
             // 
