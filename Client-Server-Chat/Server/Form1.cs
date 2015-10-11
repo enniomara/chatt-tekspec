@@ -57,6 +57,7 @@ namespace Server
                         // Prints the IP and the port # separated by a colon
                         tbxLoginInfo.Text = address.ToString() + ":" + ((IPEndPoint)listener.LocalEndpoint).Port.ToString(); ;
 
+                        startListening();
                         return true;
                     }
                     catch (Exception exception)
@@ -81,11 +82,13 @@ namespace Server
             {
                 client = await listener.AcceptTcpClientAsync();
                 updateClientList(client);
+
+
+                startReading(client);
             }
             catch (Exception error) { MessageBox.Show(error.Message, Text); return; }
 
-            startReading(client);
-            startListening();
+            
         }
 
 
@@ -99,13 +102,17 @@ namespace Server
             int n = 0;
             try
             {
-                n = await client.GetStream().ReadAsync(message, 0, message.Length);
+                n = await c.GetStream().ReadAsync(message, 0, message.Length);
             }
-            catch (Exception error) { /*MessageBox.Show("sweg" + error.Message, Text);*/ return; }
+            catch (Exception error) {
+                Console.WriteLine("Server: Something went wrong while reading incoming message. Error: " + error.Message);
+                return;
+            }
 
 
             // Forward the message to connected clients
             forwardMessage(message);
+            startReading(c);
         }
 
         /// <summary>
