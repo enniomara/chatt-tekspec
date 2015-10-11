@@ -17,10 +17,12 @@ namespace Server
         TcpClient client;
         TcpListener listener;
         List<TcpClient> clientsList = new List<TcpClient>();
+        const string splitSeparator = "¤%&splitSeparator¤%&";
 
         public serverGUI()
         {
             InitializeComponent();
+
 
             // Start server with random port
             initiateListener();
@@ -111,7 +113,7 @@ namespace Server
 
 
             // Forward the message to connected clients
-            forwardMessage(message);
+            forwardMessage(message, c);
             startReading(c);
         }
 
@@ -119,8 +121,16 @@ namespace Server
         /// Sends the incoming message to all connected clients defined in clientsList List.
         /// </summary>
         /// <param name="message">The message to be sent.</param>
-        public async void forwardMessage(byte[] message)
+        /// <param name="client">The TcpClient. Contains information from the server.</param>
+        public async void forwardMessage(byte[] message, TcpClient client)
         {
+            string fromIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString();
+
+            // For some reason it is null-terminated
+            string messageUnicode = Encoding.Unicode.GetString(message, 0, message.Length).Trim('\0');
+            message = Encoding.Unicode.GetBytes(fromIP + splitSeparator + messageUnicode);
+
+
             foreach(TcpClient c in clientsList)
             {
                 try
@@ -162,5 +172,6 @@ namespace Server
         {
             initiateListener();
         }
+
     }
 }

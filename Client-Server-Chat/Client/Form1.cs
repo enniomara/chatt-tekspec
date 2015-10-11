@@ -17,6 +17,8 @@ namespace Client
 
         TcpClient client;
         TcpListener listener;
+        const string splitSeparator = "¤%&splitSeparator¤%&";
+
 
         public Form1()
         {
@@ -86,8 +88,13 @@ namespace Client
                 return;
             }
 
-            tbxChatLogs.AppendText(Encoding.Unicode.GetString(buffer, 0, n));
-            Console.WriteLine("Text recieeved");
+            // [0] => IP Address
+            // [1] => Message
+            // http://stackoverflow.com/questions/2245442/c-sharp-split-a-string-by-another-string
+            string[] messageData = Encoding.Unicode.GetString(buffer, 0, n).Split(new string[] { splitSeparator }, StringSplitOptions.None);
+
+
+            tbxChatLogs.Text += messageData[0] + "\r\n" + messageData[1] + "\r\n \r\n";
             startReading();
         }
 
