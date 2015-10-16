@@ -38,7 +38,7 @@ namespace Server
         /// <returns>True if listener initiated, otherwise false.</returns>
         public bool initiateListener(int port = 0)
         {
-            if(port < 0 || port > 65535)
+            if (port < 0 || port > 65535)
             {
                 Console.WriteLine("The port number chosen is too big.");
                 return false;
@@ -85,12 +85,11 @@ namespace Server
                 client = await listener.AcceptTcpClientAsync();
                 updateClientList(client);
 
-
                 startReading(client);
             }
             catch (Exception error) { MessageBox.Show(error.Message, Text); return; }
 
-            
+            startListening();
         }
 
 
@@ -106,7 +105,8 @@ namespace Server
             {
                 n = await c.GetStream().ReadAsync(message, 0, message.Length);
             }
-            catch (Exception error) {
+            catch (Exception error)
+            {
                 Console.WriteLine("Server: Something went wrong while reading incoming message. Error: " + error.Message);
                 return;
             }
@@ -131,14 +131,15 @@ namespace Server
             message = Encoding.Unicode.GetBytes(fromIP + splitSeparator + messageUnicode);
 
 
-            foreach(TcpClient c in clientsList)
+            foreach (TcpClient c in clientsList)
             {
                 try
                 {
                     await c.GetStream().WriteAsync(message, 0, message.Length);
                 }
-                catch (Exception exception) {
-                    Console.WriteLine("Something went wrong when sending data to client. Error data: "+ exception.Message);
+                catch (Exception exception)
+                {
+                    Console.WriteLine("Something went wrong when sending data to client. Error data: " + exception.Message);
                     return;
                 }
             }
@@ -151,16 +152,16 @@ namespace Server
         public void updateClientList(TcpClient client)
         {
             clientsList.Add(client);
-            foreach(TcpClient c in clientsList)
+            foreach (TcpClient c in clientsList)
             {
                 // Adds list of connected IPs along with their respective ports(e.g. 127.0.0.1:5001)
-                lbxConnectedClients.Items.Add(tbxLoginInfo.Text = ((IPEndPoint)c.Client.RemoteEndPoint).Address.ToString() + ":" + ((IPEndPoint)c.Client.RemoteEndPoint).Port.ToString());
+                lbxConnectedClients.Items.Add(((IPEndPoint)c.Client.RemoteEndPoint).Address.ToString() + ":" + ((IPEndPoint)c.Client.RemoteEndPoint).Port.ToString());
             }
         }
 
         private void btnStopListening_Click(object sender, EventArgs e)
         {
-            foreach(TcpClient c in clientsList)
+            foreach (TcpClient c in clientsList)
             {
                 c.Close();
             }
