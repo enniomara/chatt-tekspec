@@ -124,7 +124,7 @@ namespace Server
         /// <param name="client">The TcpClient. Contains information from the server.</param>
         public async void forwardMessage(byte[] message, TcpClient client)
         {
-            string fromIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString();
+            string fromIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString() + ":" + ((IPEndPoint)client.Client.RemoteEndPoint).Port.ToString();
 
             // For some reason it is null-terminated
             string messageUnicode = Encoding.Unicode.GetString(message, 0, message.Length).Trim('\0');
@@ -151,6 +151,9 @@ namespace Server
         /// <param name="client">The new TcpClient to add</param>
         public void updateClientList(TcpClient client)
         {
+            // Clear the listbox. It is populated in the foreach
+            lbxConnectedClients.Items.Clear();
+
             clientsList.Add(client);
             foreach (TcpClient c in clientsList)
             {

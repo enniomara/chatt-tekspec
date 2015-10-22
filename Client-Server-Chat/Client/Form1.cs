@@ -36,7 +36,16 @@ namespace Client
                 if(IPAddress.TryParse(loginInfo[0], out IP) && int.TryParse(loginInfo[1], out port))
                 {
 
-                    client = new TcpClient(loginInfo[0], port);
+                    try
+                    {
+                        client = new TcpClient(loginInfo[0], port);
+                    }
+                    catch(Exception error)
+                    {
+                        MessageBox.Show("Something went wrong when connecting to the server. Error data: " + error.Message);
+                        return;
+                    }
+                    
 
                     gbxChatMain.Enabled = true;
                     startReading();
@@ -123,6 +132,8 @@ namespace Client
         private void btnSend_Click(object sender, EventArgs e)
         {
             startSending(tbxMessage.Text);
+
+            tbxMessage.Clear();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
