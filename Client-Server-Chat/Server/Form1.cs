@@ -64,7 +64,7 @@ namespace Server
                     }
                     catch (Exception exception)
                     {
-                        MessageBox.Show(exception.ToString());
+                        MessageBox.Show("Something went wrong when initializing the listener. Error data: " + exception.ToString());
                         return false;
                     }
                 }
@@ -87,7 +87,7 @@ namespace Server
 
                 startReading(client);
             }
-            catch (Exception error) { MessageBox.Show(error.Message, Text); return; }
+            catch (Exception error) { MessageBox.Show("Something went wrong. Error data: " + error.Message); return; }
 
             startListening();
         }

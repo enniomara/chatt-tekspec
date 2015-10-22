@@ -44,7 +44,7 @@ namespace Client
                 }
                 else
                 {
-                    Console.WriteLine("Client: Failed parsing login IP or Port Number. Make sure you have entered correct connect information(e.g. 127.0.0.1:8080).");
+                    MessageBox.Show("Failed parsing login IP or Port Number. Make sure you have entered correct connect information(e.g. 127.0.0.1:8080).");
                 }
 
 
@@ -62,7 +62,7 @@ namespace Client
             {
                 client = await listener.AcceptTcpClientAsync();
             }
-            catch (Exception error) { MessageBox.Show(error.Message, Text); return; }
+            catch (Exception error) { MessageBox.Show("Something went wrong with the listener. Error data: " + error.Message); return; }
 
             startReading();
         }
@@ -76,19 +76,19 @@ namespace Client
 
             byte[] buffer = new byte[256];
 
+            // stores the size of the incoming bytes
             int n = 0;
             try
             {
                 n = await client.GetStream().ReadAsync(buffer, 0, 256);
-                //n = client.GetStream().Read(buffer, 0, 256);
             }
             catch (Exception error)
             {
-                MessageBox.Show("What" + error.Message);
+                MessageBox.Show("Something went wrong while reading the incoming message. Error data: " + error.Message);
                 return;
             }
 
-            // [0] => IP Address
+            // [0] => IP Address:port
             // [1] => Message
             // http://stackoverflow.com/questions/2245442/c-sharp-split-a-string-by-another-string
             string[] messageData = Encoding.Unicode.GetString(buffer, 0, n).Split(new string[] { splitSeparator }, StringSplitOptions.None);
@@ -114,7 +114,7 @@ namespace Client
                 }
                 catch(Exception error)
                 {
-                    Console.WriteLine("Something went wrong when sending message");
+                    MessageBox.Show("Something went wrong when sending message. Error data: " + error.Message);
                     return;
                 }
             }
