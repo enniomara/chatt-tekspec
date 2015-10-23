@@ -32,8 +32,6 @@
             this.lblLoginInfolbl = new System.Windows.Forms.Label();
             this.tbxLoginInfo = new System.Windows.Forms.TextBox();
             this.lblConnectedClients = new System.Windows.Forms.Label();
-            this.btnStartListening = new System.Windows.Forms.Button();
-            this.btnStopListening = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbxConnectedClients
@@ -69,33 +67,11 @@
             this.lblConnectedClients.TabIndex = 3;
             this.lblConnectedClients.Text = "Connected Clients:";
             // 
-            // btnStartListening
-            // 
-            this.btnStartListening.Location = new System.Drawing.Point(91, 318);
-            this.btnStartListening.Name = "btnStartListening";
-            this.btnStartListening.Size = new System.Drawing.Size(97, 23);
-            this.btnStartListening.TabIndex = 4;
-            this.btnStartListening.Text = "Start Listening";
-            this.btnStartListening.UseVisualStyleBackColor = true;
-            this.btnStartListening.Click += new System.EventHandler(this.btnStartListening_Click);
-            // 
-            // btnStopListening
-            // 
-            this.btnStopListening.Location = new System.Drawing.Point(210, 318);
-            this.btnStopListening.Name = "btnStopListening";
-            this.btnStopListening.Size = new System.Drawing.Size(102, 23);
-            this.btnStopListening.TabIndex = 5;
-            this.btnStopListening.Text = "Stop Listening";
-            this.btnStopListening.UseVisualStyleBackColor = true;
-            this.btnStopListening.Click += new System.EventHandler(this.btnStopListening_Click);
-            // 
             // serverGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(410, 353);
-            this.Controls.Add(this.btnStopListening);
-            this.Controls.Add(this.btnStartListening);
             this.Controls.Add(this.lblConnectedClients);
             this.Controls.Add(this.tbxLoginInfo);
             this.Controls.Add(this.lblLoginInfolbl);
@@ -113,8 +89,6 @@
         private System.Windows.Forms.Label lblLoginInfolbl;
         private System.Windows.Forms.TextBox tbxLoginInfo;
         private System.Windows.Forms.Label lblConnectedClients;
-        private System.Windows.Forms.Button btnStartListening;
-        private System.Windows.Forms.Button btnStopListening;
     }
 }
 

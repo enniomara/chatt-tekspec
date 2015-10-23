@@ -131,9 +131,16 @@ namespace Client
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            startSending(tbxMessage.Text);
+            if (tbxMessage.Text != "")
+            {
+                startSending(tbxMessage.Text);
 
-            tbxMessage.Clear();
+                tbxMessage.Clear();
+            }
+            else
+            {
+                MessageBox.Show("There is no message to send.")
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
