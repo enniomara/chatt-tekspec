@@ -27,37 +27,46 @@ namespace Client
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-            if (tbxConnectInformation.Text != "")
+            if ( client == null)
             {
-                string[] loginInfo = tbxConnectInformation.Text.Split(':');
-                IPAddress IP;
-                int port;
 
-                if(IPAddress.TryParse(loginInfo[0], out IP) && int.TryParse(loginInfo[1], out port))
+            
+                if (tbxConnectInformation.Text != "")
                 {
+                    string[] loginInfo = tbxConnectInformation.Text.Split(':');
+                    IPAddress IP;
+                    int port;
 
-                    try
+                    if(IPAddress.TryParse(loginInfo[0], out IP) && int.TryParse(loginInfo[1], out port))
                     {
-                        client = new TcpClient(loginInfo[0], port);
-                    }
-                    catch(Exception error)
-                    {
-                        MessageBox.Show("Something went wrong when connecting to the server. Error data: " + error.Message);
-                        return;
-                    }
+
+                        try
+                        {
+                            client = new TcpClient(loginInfo[0], port);
+                        }
+                        catch(Exception error)
+                        {
+                            MessageBox.Show("Something went wrong when connecting to the server. Error data: " + error.Message);
+                            return;
+                        }
                     
 
-                    gbxChatMain.Enabled = true;
-                    startReading();
+                        gbxChatMain.Enabled = true;
+                        startReading();
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed parsing login IP or Port Number. Make sure you have entered correct connect information(e.g. 127.0.0.1:8080).");
+                    }
+
+
 
                 }
-                else
-                {
-                    MessageBox.Show("Failed parsing login IP or Port Number. Make sure you have entered correct connect information(e.g. 127.0.0.1:8080).");
-                }
-
-
-
+            }
+            else
+            {
+                MessageBox.Show("The client is already connected. ");
             }
         }
 
@@ -139,7 +148,7 @@ namespace Client
             }
             else
             {
-                MessageBox.Show("There is no message to send.")
+                MessageBox.Show("There is no message to send.");
             }
         }
 
